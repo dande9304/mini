@@ -8,12 +8,7 @@ import java.util.Stack;
 import com.github.alexmao86.json.io.CharSequenceInputSource;
 import com.github.alexmao86.json.io.StringInputSource;
 
-/**
- * ClassName: JSONParser <br/>
- * date: 2017年9月26日 上午11:08:56 <br/>
- * 
- * @author
- */
+
 public final class JsonReader extends JsonSystem {
 	private final class IndexedChar {
 		char chr;
@@ -54,7 +49,6 @@ public final class JsonReader extends JsonSystem {
 		return (T) jsonDeserializer.deserialize(e, type, this);
 	}
 
-	// TODO 如果改进支持泛型类型的级联,则需要改进本方法,如果第归的记录和传递类型参数。用户需友好
 	@SuppressWarnings("unchecked")
 	public final <T> Collection<T> parseAsCollection(final String src, Class<T> type)
 			throws IOException, JsonParseException {
@@ -65,22 +59,6 @@ public final class JsonReader extends JsonSystem {
 		@SuppressWarnings("rawtypes")
 		JsonDeserializer jsonDeserializer = this.queryJsonDeserializer(Collection.class);
 		return (Collection<T>) jsonDeserializer.deserialize(e, Collection.class, this, type);
-	}
-
-	// TODO 如果改进支持泛型类型的级联,则需要改进本方法,如果第归的记录和传递类型参数。用户需友好
-	@SuppressWarnings("unchecked")
-	public final <K, V> Map<K, V> parseAsMap(final String src, Class<K> kType, Class<V> vType)
-			throws IOException, JsonParseException {
-		if (Map.class.isAssignableFrom(kType) || Map.class.isAssignableFrom(vType)) {
-			throw new IllegalArgumentException("direct nested java generic type is not supported");
-		}
-		if (Collection.class.isAssignableFrom(kType) || Collection.class.isAssignableFrom(vType)) {
-			throw new IllegalArgumentException("direct nested java generic type is not supported");
-		}
-		JsonElement e = parse(src);
-		@SuppressWarnings("rawtypes")
-		JsonDeserializer jsonDeserializer = this.queryJsonDeserializer(Map.class);
-		return (Map<K, V>) jsonDeserializer.deserialize(e, Map.class, this, kType, vType);
 	}
 
 	/**
@@ -195,16 +173,6 @@ public final class JsonReader extends JsonSystem {
 			source.skipWhitespace();
 		}
 		return ret;
-	}
-
-	private final void skipSyntaxChar(final CharSequenceInputSource source, final char c)
-			throws IOException, JsonParseException {
-		source.skipWhitespace();
-		char syntax = source.getCharAndMove();
-		if (syntax != c) {// check element splitting
-			throw new JsonParseException(source);
-		}
-		source.skipWhitespace();// eat more possible whitespace
 	}
 
 	/**
