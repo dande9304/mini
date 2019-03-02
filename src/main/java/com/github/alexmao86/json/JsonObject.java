@@ -17,10 +17,6 @@ public final class JsonObject extends JsonElement {
 	private final KeyArrayLinkedHashMap members = new KeyArrayLinkedHashMap();
 
 	/**
-	 * Adds a member, which is a name-value pair, to self. The name must be a
-	 * String, but the value can be an arbitrary JsonElement, thereby allowing you
-	 * to build a full tree of JsonElements rooted at this node.
-	 *
 	 * @param property
 	 *            name of the member.
 	 * @param value

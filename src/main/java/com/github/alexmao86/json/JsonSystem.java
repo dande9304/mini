@@ -122,20 +122,7 @@ public class JsonSystem {
 				return json.getAsShort();
 			}
 		};
-		globalJsonSerializer(shortWorker);
-		globalJsonDeserializer(shortWorker);
-		// Integer
-		JsonWorker intWorker = new JsonWorker<Integer>() {
-			public Class<Integer> supportedType() {
-				return Integer.class;
-			}
-
-			@Override
-			public Integer deserialize(JsonElement json, Class targetClass, JsonSystem context, Class... actuallTypes)
-					throws JsonParseException {
-				return json.getAsInt();
-			}
-		};
+	
 		globalJsonSerializer(intWorker);
 		globalJsonDeserializer(intWorker);
 
